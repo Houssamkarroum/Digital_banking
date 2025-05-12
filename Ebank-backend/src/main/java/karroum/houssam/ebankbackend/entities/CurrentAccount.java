@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("CA")
 public class CurrentAccount extends BankAccount{
     private double overDraft;
-
 }
