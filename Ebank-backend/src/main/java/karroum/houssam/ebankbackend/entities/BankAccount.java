@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TYPE", length = 4, discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "TYPE", length = 4)
 public class BankAccount {
     @Id
     private String id;
@@ -22,7 +22,7 @@ public class BankAccount {
     private AccountStatus status;
     @ManyToOne
     private Customer customer;
-    @OneToMany(mappedBy = "bankAccount")
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AccountOperation> accountOperations;
 
 }

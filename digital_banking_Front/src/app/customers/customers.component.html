@@ -1,0 +1,45 @@
+<div >
+    <ng-container *ngIf="customers | async as listCustomers; else failure">
+        <div >
+            <h1>Customers</h1>
+            <p>Welcome to the Customers page!</p>
+            <p>Here you can manage your customers.</p>
+            <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+
+                <div>
+                    <label for="search">Search Customers:</label>
+                    <input type="text" id="search" formControlName="keyword" placeholder="Enter customer name or email">
+                    <button type="submit" [disabled]="searchFormGroup.invalid">Search</button>
+
+                </div>
+
+            </form>
+            <table >
+            <thead>
+                <tr>
+                <th>Customer ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let customer of customers | async">
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.email }}</td>
+                <td>
+                    <button (click)="handleDeleteCustomer(customer.id)">Delete</button>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+
+    </ng-container>
+    <ng-template #failure>
+        <div class="alert alert-danger">
+            <strong>Error!</strong> {{ errorMessage }}
+        </div>
+    </ng-template>
+
+</div>

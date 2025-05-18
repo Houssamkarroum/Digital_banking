@@ -1,7 +1,6 @@
 package karroum.houssam.ebankbackend.services;
 
 import karroum.houssam.ebankbackend.dtos.*;
-import karroum.houssam.ebankbackend.entities.Customer;
 import karroum.houssam.ebankbackend.exceptions.BalanceNotSufficientException;
 import karroum.houssam.ebankbackend.exceptions.BankAccountNotFoundException;
 import karroum.houssam.ebankbackend.exceptions.CustomerNotFoundException;
@@ -15,7 +14,7 @@ public interface BankAccountService {
     BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
     void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException;
     void credit(String accountId, double amount, String description) throws BankAccountNotFoundException;
-    void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException;
+    void transfer(String accountIdSource, String accountIdDestination, String description, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException;
 
     List<BankAccountDTO> bankAccountList();
 

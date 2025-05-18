@@ -134,9 +134,9 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException {
-        debit(accountIdSource,amount,"Transfer to "+accountIdDestination);
-        credit(accountIdDestination,amount,"Transfer from "+accountIdSource);
+    public void transfer(String accountIdSource, String accountIdDestination, String description, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException {
+        debit(accountIdSource,amount,description);
+        credit(accountIdDestination,amount,description);
     }
     @Override
     public List<BankAccountDTO> bankAccountList(){

@@ -1,0 +1,133 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-6">
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+          <h2 class="mb-0">Accounts</h2>
+        </div>
+        <div class="card-body">
+          <p class="lead text-center mb-4">Welcome to the accounts page!<br>
+            <span class="text-muted small">Here you can manage your accounts.</span>
+          </p>
+          <form [formGroup]="accountFormGroup" (ngSubmit)="handleSearchAccounts()" class="mb-4">
+            <div class="input-group input-group-lg">
+              <input type="text" id="search" formControlName="accountId" class="form-control" placeholder="Enter account Id">
+              <button type="submit" class="btn btn-primary px-4">Search</button>
+            </div>
+          </form>
+          <ng-container *ngIf="accountObservable | async as accountDetails">
+            <div class="row mb-4">
+              <div class="col-md-6 mb-2">
+                <div class="bg-light rounded p-3 h-100">
+                  <label class="form-label fw-bold mb-1">Account ID</label>
+                  <div class="form-control-plaintext fs-5">{{accountDetails.accountId}}</div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="bg-light rounded p-3 h-100">
+                  <label class="form-label fw-bold mb-1">Account Balance</label>
+                  <div class="form-control-plaintext fs-5 text-success">{{accountDetails.balance | currency}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered align-middle shadow-sm">
+                <thead class="table-primary">
+                  <tr>
+                    <th>ID</th>
+                    <th>Operation Date</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let transaction of accountDetails.accountOperationDTOS">
+                    <tr>
+                      <td>{{transaction.id}}</td>
+                      <td>{{transaction.operationDate | date:'dd-MM--yyyy'}}</td>
+                      <td>
+                        <span [ngClass]="{'text-success': transaction.amount > 0, 'text-danger': transaction.amount < 0}">
+                          {{transaction.amount | currency}}
+                        </span>
+                      </td>
+                      <td>
+                        <span class="badge" [ngClass]="{
+                          'bg-success': transaction.type === 'CREDIT',
+                          'bg-danger': transaction.type === 'DEBIT',
+                          'bg-secondary': transaction.type !== 'CREDIT' && transaction.type !== 'DEBIT'
+                        }">
+                          {{transaction.type}}
+                        </span>
+                      </td>
+                      <td>{{transaction.description}}</td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="accountDetails.accountOperationDTOS.length === 0">
+                    <tr>
+                      <td colspan="5" class="text-center text-muted">No transactions found.</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+              <!-- Pagination Controls -->
+              <nav *ngIf="accountDetails.totalPages && accountDetails.totalPages > 1">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" >
+                    <button class="page-link" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 0">Previous</button>
+                  </li>
+                  <li
+                    class="page-item"
+                    *ngFor="let page of [].constructor(accountDetails.totalPages); let i = index"
+                    [class.active]="i === currentPage"
+                  >
+                    <button class="page-link" (click)="changePage(i)">{{ i + 1 }}</button>
+                  </li>
+                  <li class="page-item" >
+                    <button class="page-link" (click)="changePage(currentPage + 1)" [disabled]="currentPage === accountDetails.totalPages - 1">Next</button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 " *ngIf="accountObservable | async ">
+      <form [formGroup]="operationFormGroup" (ngSubmit)="handleOperation()" class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+          <h2 class="mb-0">Account Operations</h2>
+        </div>
+        <div class="card-body">
+          <div>
+            <label>Credit:</label>
+            <input type="radio" formControlName="operationType" class=" m-3" value="CREDIT">
+          </div>
+            <div>
+            <label>Debit:</label>
+            <input type="radio" formControlName="operationType" class=" m-3" value="DEBIT">
+          </div>
+            <div>
+            <label>transfer:</label>
+            <input type="radio" formControlName="operationType" class=" m-3" value="TRANSFER">
+          </div>
+          <div *ngIf="operationFormGroup.value.operationType === 'TRANSFER'">
+            <label>Account destination</label>
+             <input type="text" formControlName="accountDestination" class="form-control mb-3" placeholder="Enter account destination">
+        </div>
+          <div>
+            <label>Amount</label>
+            <input type="number" formControlName="amount" class="form-control mb-3" placeholder="Enter amount">
+        </div>
+        <div>
+            <label>Description</label>
+            <input type="text" formControlName="description" class="form-control mb-3" placeholder="Enter description">
+        </div>
+        </div>
+        <div class="card-footer text-center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -4,15 +4,29 @@ import { BrowserModule, provideClientHydration, withEventReplay } from '@angular
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { CustomersComponent } from './customers/customers.component';
+import { AccountsComponent } from './accounts/accounts.component';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NewCustomerComponent } from './new-customer/new-customer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    CustomersComponent,
+    AccountsComponent,
+    NewCustomerComponent
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+   HttpClientModule,
+   CommonModule,
+   ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(withEventReplay())
