@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewCustomerComponent } from './new-customer/new-customer.component';
 import { CustomerAccountsComponent } from './customer-accounts/customer-accounts.component';
+import { AdminTemplateComponent } from './admin-template/admin-template.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { CustomerAccountsComponent } from './customer-accounts/customer-accounts
     CustomersComponent,
     AccountsComponent,
     NewCustomerComponent,
-    CustomerAccountsComponent
+    CustomerAccountsComponent,
+    AdminTemplateComponent
+    
     
   ],
   imports: [
@@ -28,7 +32,8 @@ import { CustomerAccountsComponent } from './customer-accounts/customer-accounts
     AppRoutingModule,
    HttpClientModule,
    CommonModule,
-   ReactiveFormsModule
+   ReactiveFormsModule,
+   LoginComponent
   ],
   providers: [
     provideClientHydration(withEventReplay())
