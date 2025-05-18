@@ -1,45 +1,74 @@
-<div >
-    <ng-container *ngIf="customers | async as listCustomers; else failure">
-        <div >
-            <h1>Customers</h1>
-            <p>Welcome to the Customers page!</p>
-            <p>Here you can manage your customers.</p>
-            <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+<div class="container mt-5">
+  <ng-container *ngIf="customers | async as listCustomers; else failure">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-primary text-white">
+        <h2 class="mb-0 text-center">Customers Management</h2>
+      </div>
+      <div class="card-body">
+        <div class="text-center mb-4">
+          <h4 class="text-primary">Welcome to the Customers page!</h4>
+          <p class="text-muted">Here you can manage your customers.</p>
+        </div>
 
-                <div>
-                    <label for="search">Search Customers:</label>
-                    <input type="text" id="search" formControlName="keyword" placeholder="Enter customer name or email">
-                    <button type="submit" [disabled]="searchFormGroup.invalid">Search</button>
+        <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()" class="mb-4">
+          <div class="input-group">
+            <label class="input-group-text" for="search">
+              <i class="fas fa-search"></i>
+            </label>
+            <input 
+              type="text" 
+              id="search" 
+              formControlName="keyword" 
+              class="form-control form-control-lg"
+              placeholder="Search by name or email">
+            <button 
+              type="submit" 
+              class="btn btn-primary" 
+              [disabled]="searchFormGroup.invalid">
+              Search
+            </button>
+          </div>
+        </form>
 
-                </div>
-
-            </form>
-            <table >
-            <thead>
-                <tr>
-                <th>Customer ID</th>
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                </tr>
+                <th>Actions</th>
+              </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let customer of customers | async">
+              <tr *ngFor="let customer of customers | async">
                 <td>{{ customer.id }}</td>
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.email }}</td>
-                <td>
-                    <button (click)="handleDeleteCustomer(customer.id)">Delete</button>
+                <td class="text-center">
+                  <button 
+                    class="btn btn-sm btn-danger me-2" 
+                    (click)="handleDeleteCustomer(customer.id)">
+                    <i class="fas fa-trash"></i> Delete
+                  </button>
+                  <button 
+                    class="btn btn-sm btn-primary" 
+                    (click)="handleCustomerAccounts(customer)">
+                    <i class="fas fa-wallet"></i> Accounts
+                  </button>
                 </td>
-                </tr>
+              </tr>
             </tbody>
-            </table>
+          </table>
         </div>
+      </div>
+    </div>
+  </ng-container>
 
-    </ng-container>
-    <ng-template #failure>
-        <div class="alert alert-danger">
-            <strong>Error!</strong> {{ errorMessage }}
-        </div>
-    </ng-template>
-
+  <ng-template #failure>
+    <div class="alert alert-danger shadow-sm">
+      <i class="fas fa-exclamation-triangle me-2"></i>
+      <strong>Error!</strong> {{ errorMessage }}
+    </div>
+  </ng-template>
 </div>

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomerService } from '../services/customer.service';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Customer } from '../model/customer.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -15,12 +16,13 @@ export class CustomersComponent implements OnInit {
   customers!: Observable<Array<Customer>>;
   errorMessage: string = '';
   searchFormGroup!: FormGroup;
-
+  
   constructor(
     private customerService: CustomerService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
-
+ 
   ngOnInit(): void {
     this.searchFormGroup = this.fb.group({
       keyword: this.fb.control("")
@@ -55,4 +57,11 @@ export class CustomersComponent implements OnInit {
       }
     });
   }
+
+
+  handleCustomerAccounts(c: Customer): void {
+    // Navigate to the customer accounts page
+    this.router.navigateByUrl("/customer-accounts/"+c.id, { state: { customer: c } });
+    console.log("Customer accounts for:", c);
+  } 
 }

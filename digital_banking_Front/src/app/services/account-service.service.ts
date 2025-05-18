@@ -29,7 +29,6 @@ export class AccountServiceService {
       description
     }, { responseType: 'text' });
   }
-    // ...existing code...
   
   public transfer(accountId: string, accountDestination: string,description: string , amount: number): Observable<any> {
       return this.http.post(environment.backendHost+'/accounts/transfer', {
