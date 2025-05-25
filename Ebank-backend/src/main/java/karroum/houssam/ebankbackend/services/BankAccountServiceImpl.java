@@ -18,9 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -197,5 +195,116 @@ public class BankAccountServiceImpl implements BankAccountService {
         List<Customer> customers=customerRepository.searchCustomer(keyword);
         List<CustomerDTO> customerDTOS = customers.stream().map(cust -> dtoMapper.fromCustomer(cust)).collect(Collectors.toList());
         return customerDTOS;
+    }
+
+    @Override
+    public DashboardDTO getDashboardStatistics() {
+        DashboardDTO dashboardDTO = new DashboardDTO();
+
+        // Customer statistics
+        long totalCustomers = customerRepository.count();
+        dashboardDTO.setTotalCustomers(totalCustomers);
+
+        // Account statistics
+        List<BankAccount> allAccounts = bankAccountRepository.findAll();
+        long totalAccounts = allAccounts.size();
+        dashboardDTO.setTotalAccounts(totalAccounts);
+
+        long currentAccountsCount = allAccounts.stream()
+                .filter(account -> account instanceof CurrentAccount)
+                .count();
+        dashboardDTO.setCurrentAccountsCount(currentAccountsCount);
+
+        long savingAccountsCount = allAccounts.stream()
+                .filter(account -> account instanceof SavingAccount)
+                .count();
+        dashboardDTO.setSavingAccountsCount(savingAccountsCount);
+
+        Map<String, Long> accountTypeDistribution = new HashMap<>();
+        accountTypeDistribution.put("Current Accounts", currentAccountsCount);
+        accountTypeDistribution.put("Saving Accounts", savingAccountsCount);
+        dashboardDTO.setAccountTypeDistribution(accountTypeDistribution);
+
+        // Balance statistics
+        double totalBalance = allAccounts.stream()
+                .mapToDouble(BankAccount::getBalance)
+                .sum();
+        dashboardDTO.setTotalBalance(totalBalance);
+
+        OptionalDouble avgBalanceOpt = allAccounts.stream()
+                .mapToDouble(BankAccount::getBalance)
+                .average();
+        double avgBalance = avgBalanceOpt.orElse(0.0);
+        dashboardDTO.setAvgBalance(avgBalance);
+
+        OptionalDouble maxBalanceOpt = allAccounts.stream()
+                .mapToDouble(BankAccount::getBalance)
+                .max();
+        double maxBalance = maxBalanceOpt.orElse(0.0);
+        dashboardDTO.setMaxBalance(maxBalance);
+
+        OptionalDouble minBalanceOpt = allAccounts.stream()
+                .mapToDouble(BankAccount::getBalance)
+                .min();
+        double minBalance = minBalanceOpt.orElse(0.0);
+        dashboardDTO.setMinBalance(minBalance);
+
+        // Operation statistics
+        List<AccountOperation> allOperations = accountOperationRepository.findAll();
+        long totalOperations = allOperations.size();
+        dashboardDTO.setTotalOperations(totalOperations);
+
+        long debitOperationsCount = allOperations.stream()
+                .filter(op -> op.getType() == OperationType.DEBIT)
+                .count();
+        dashboardDTO.setDebitOperationsCount(debitOperationsCount);
+
+        long creditOperationsCount = allOperations.stream()
+                .filter(op -> op.getType() == OperationType.CREDIT)
+                .count();
+        dashboardDTO.setCreditOperationsCount(creditOperationsCount);
+
+        Map<String, Long> operationTypeDistribution = new HashMap<>();
+        operationTypeDistribution.put("Debit", debitOperationsCount);
+        operationTypeDistribution.put("Credit", creditOperationsCount);
+        dashboardDTO.setOperationTypeDistribution(operationTypeDistribution);
+
+        // Recent activity
+        double totalDebitAmount = allOperations.stream()
+                .filter(op -> op.getType() == OperationType.DEBIT)
+                .mapToDouble(AccountOperation::getAmount)
+                .sum();
+        dashboardDTO.setTotalDebitAmount(totalDebitAmount);
+
+        double totalCreditAmount = allOperations.stream()
+                .filter(op -> op.getType() == OperationType.CREDIT)
+                .mapToDouble(AccountOperation::getAmount)
+                .sum();
+        dashboardDTO.setTotalCreditAmount(totalCreditAmount);
+
+        // Additional statistics
+        List<CurrentAccount> currentAccounts = allAccounts.stream()
+                .filter(account -> account instanceof CurrentAccount)
+                .map(account -> (CurrentAccount) account)
+                .collect(Collectors.toList());
+
+        OptionalDouble avgOverdraftOpt = currentAccounts.stream()
+                .mapToDouble(CurrentAccount::getOverDraft)
+                .average();
+        double avgOverdraft = avgOverdraftOpt.orElse(0.0);
+        dashboardDTO.setAvgOverdraft(avgOverdraft);
+
+        List<SavingAccount> savingAccounts = allAccounts.stream()
+                .filter(account -> account instanceof SavingAccount)
+                .map(account -> (SavingAccount) account)
+                .collect(Collectors.toList());
+
+        OptionalDouble avgInterestRateOpt = savingAccounts.stream()
+                .mapToDouble(SavingAccount::getInterestRate)
+                .average();
+        double avgInterestRate = avgInterestRateOpt.orElse(0.0);
+        dashboardDTO.setAvgInterestRate(avgInterestRate);
+
+        return dashboardDTO;
     }
 }

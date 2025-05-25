@@ -1,0 +1,106 @@
+<div *ngIf="stats" class="container p-4" style="min-height: 100vh; background: #f9fafb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333;">
+
+  <h2 class="text-center mb-4" style="font-weight: 600; color: #3b82f6;">Dashboard Statistiques</h2>
+
+  <!-- Clients & Accounts -->
+  <div class="row mb-4" style="gap: 1rem; flex-wrap: wrap;">
+    <div style="flex: 1 1 200px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+      <p style="margin-bottom: 0.25rem; font-size: 0.9rem; color: #6b7280;">Total Clients</p>
+      <p style="font-size: 1.75rem; font-weight: 700;">{{ stats.totalCustomers }}</p>
+    </div>
+    <div style="flex: 1 1 200px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+      <p style="margin-bottom: 0.25rem; font-size: 0.9rem; color: #6b7280;">Total Comptes</p>
+      <p style="font-size: 1.75rem; font-weight: 700;">{{ stats.totalAccounts }}</p>
+    </div>
+    <div style="flex: 1 1 200px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+      <p style="margin-bottom: 0.25rem; font-size: 0.9rem; color: #6b7280;">Comptes Courants</p>
+      <p style="font-size: 1.75rem; font-weight: 700;">{{ stats.currentAccountsCount }}</p>
+    </div>
+    <div style="flex: 1 1 200px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+      <p style="margin-bottom: 0.25rem; font-size: 0.9rem; color: #6b7280;">Comptes Épargne</p>
+      <p style="font-size: 1.75rem; font-weight: 700;">{{ stats.savingAccountsCount }}</p>
+    </div>
+  </div>
+
+  <!-- Balance Section -->
+  <div class="row mb-4" style="gap: 1rem; flex-wrap: wrap;">
+    <div style="flex: 1 1 200px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+      <p style="margin-bottom: 0.25rem; font-size: 0.9rem; color: #6b7280;">Solde Total</p>
+      <p style="font-size: 1.5rem; font-weight: 600;">{{ stats.totalBalance }}</p>
+    </div>
+    <div style="flex: 1 1 200px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+      <p style="margin-bottom: 0.25rem; font-size: 0.9rem; color: #6b7280;">Moyenne</p>
+      <p style="font-size: 1.5rem; font-weight: 600;">{{ stats.avgBalance }}</p>
+    </div>
+    <div style="flex: 1 1 200px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+      <p style="margin-bottom: 0.25rem; font-size: 0.9rem; color: #6b7280;">Maximum</p>
+      <p style="font-size: 1.5rem; font-weight: 600;">{{ stats.maxBalance }}</p>
+    </div>
+    <div style="flex: 1 1 200px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+      <p style="margin-bottom: 0.25rem; font-size: 0.9rem; color: #6b7280;">Minimum</p>
+      <p style="font-size: 1.5rem; font-weight: 600;">{{ stats.minBalance }}</p>
+    </div>
+  </div>
+
+  <!-- Operations Section -->
+  <section class="mb-5">
+    <h3 style="color: #3b82f6; font-weight: 600; margin-bottom: 1rem;">Opérations</h3>
+    <div class="row" style="gap: 1rem; flex-wrap: wrap;">
+      <div style="flex: 1 1 150px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+        <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.25rem;">Total</p>
+        <p style="font-size: 1.5rem; font-weight: 600;">{{ stats.totalOperations }}</p>
+      </div>
+      <div style="flex: 1 1 150px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+        <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.25rem;">Débits</p>
+        <p style="font-size: 1.5rem; font-weight: 600;">{{ stats.debitOperationsCount }}</p>
+      </div>
+      <div style="flex: 1 1 150px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center;">
+        <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.25rem;">Crédits</p>
+        <p style="font-size: 1.5rem; font-weight: 600;">{{ stats.creditOperationsCount }}</p>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 1rem; gap: 1rem; flex-wrap: wrap;">
+      <div style="flex: 1 1 45%; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+        <p style="margin: 0;">Total Débit : <strong style="color: #ef4444;">{{ stats.totalDebitAmount }}</strong></p>
+      </div>
+      <div style="flex: 1 1 45%; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+        <p style="margin: 0;">Total Crédit : <strong style="color: #10b981;">{{ stats.totalCreditAmount }}</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specific Accounts -->
+  <section class="mb-5">
+    <h3 style="color: #3b82f6; font-weight: 600; margin-bottom: 1rem;">Comptes Spécifiques</h3>
+    <p>Moyenne Overdraft (Courants) : <strong>{{ stats.avgOverdraft }}</strong></p>
+    <p>Moyenne Taux d'intérêt (Épargne) : <strong>{{ stats.avgInterestRate }}</strong></p>
+  </section>
+
+  <!-- Account Types Distribution -->
+  <section class="mb-5">
+    <h3 style="color: #3b82f6; font-weight: 600; margin-bottom: 1rem;">Répartition Types de Comptes</h3>
+    <div *ngFor="let key of objectKeys(stats.accountTypeDistribution)" style="margin-bottom: 1rem;">
+      <p style="font-weight: 600; margin-bottom: 0.25rem;">{{ key }} : {{ stats.accountTypeDistribution[key] }}</p>
+      <div style="background: #e5e7eb; height: 20px; border-radius: 10px; overflow: hidden;">
+        <div
+          style="height: 100%; background: #3b82f6; width: {{ (stats.accountTypeDistribution[key] / stats.totalAccounts) * 100 }}%;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Operations Types Distribution -->
+  <section>
+    <h3 style="color: #3b82f6; font-weight: 600; margin-bottom: 1rem;">Répartition Types d'Opérations</h3>
+    <div *ngFor="let key of objectKeys(stats.operationTypeDistribution)" style="margin-bottom: 1rem;">
+      <p style="font-weight: 600; margin-bottom: 0.25rem;">{{ key }} : {{ stats.operationTypeDistribution[key] }}</p>
+      <div style="background: #e5e7eb; height: 20px; border-radius: 10px; overflow: hidden;">
+        <div
+          style="height: 100%; background: #10b981; width: {{ (stats.operationTypeDistribution[key] / stats.totalOperations) * 100 }}%;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

@@ -7,6 +7,7 @@ import karroum.houssam.ebankbackend.exceptions.CustomerNotFoundException;
 
 import java.util.List;
 public interface BankAccountService {
+    DashboardDTO getDashboardStatistics();
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
     CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
     SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;

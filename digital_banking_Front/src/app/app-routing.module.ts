@@ -8,6 +8,7 @@ import { CustomerAccountsComponent } from './customer-accounts/customer-accounts
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { AdminTemplateComponent } from './admin-template/admin-template.component';
+import { DashboardComponent } from './dash/dashboard.component';
 const routes: Routes = [
  {path: "login", component: LoginComponent},
   {path: "", redirectTo: "/login", pathMatch:"full"},
@@ -16,6 +17,7 @@ const routes: Routes = [
       {path:"accounts", component: AccountsComponent},
       { path :"new-customer", component : NewCustomerComponent},
       { path :"customer-accounts/:id", component : CustomerAccountsComponent},
+      { path :"dash", component : DashboardComponent},
     ]},
 ];
 

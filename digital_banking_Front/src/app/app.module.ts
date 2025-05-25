@@ -15,6 +15,8 @@ import { CustomerAccountsComponent } from './customer-accounts/customer-accounts
 import { AdminTemplateComponent } from './admin-template/admin-template.component';
 import { LoginComponent } from './login/login.component';
 import { appHttpInterceptor } from './interceptors/app-http.interceptor';
+import { NgChartsModule } from 'ng2-charts';
+import { DashboardComponent } from './dash/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { appHttpInterceptor } from './interceptors/app-http.interceptor';
     AccountsComponent,
     NewCustomerComponent,
     CustomerAccountsComponent,
-    AdminTemplateComponent
+    AdminTemplateComponent,
+    DashboardComponent
+    
     
     
   ],
@@ -34,7 +38,9 @@ import { appHttpInterceptor } from './interceptors/app-http.interceptor';
    HttpClientModule,
    CommonModule,
    ReactiveFormsModule,
-   LoginComponent
+   LoginComponent,
+   NgChartsModule,
+   NgChartsModule
   ],
   providers: [
     provideClientHydration(withEventReplay()),
